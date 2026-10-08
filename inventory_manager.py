@@ -52,7 +52,7 @@ def add_product(inventory, product_id, name, price, stock):
     })
     return True
 
-def update_stock(inventory, product_id, new_stock):
+def update_stock(inventory, product_id, new_stock): #function to update the stock of a product and record the change in its history
     product = find_product(inventory, product_id)
     if product is None: #nothing to update if the product does not exist
         return None
@@ -61,7 +61,7 @@ def update_stock(inventory, product_id, new_stock):
     product.setdefault("history", []).append(change) #record the stock change in the product's history
     return product
 
-def search_product(inventory, product_id):
+def search_product(inventory, product_id): #function to search for a product by its ID and display its details if found
     product = find_product(inventory, product_id)
     if product is None:
         print("\nProduct not found.")
@@ -75,14 +75,14 @@ def search_product(inventory, product_id):
     print("-" * 48)
     return product
 
-def get_text(prompt):
+def get_text(prompt): #function to get a non-empty string from the user, ensuring it is valid
     text = input(prompt).strip()
     while not text: #reject empty input and prompt again
         print("This field cannot be empty.")
         text = input(prompt).strip()
     return text
 
-def get_number(prompt, number_type):
+def get_number(prompt, number_type): #function to get a number from the user, ensuring it is valid and non-negative
     while True:
         try:
             value = number_type(input(prompt).strip())
@@ -94,7 +94,7 @@ def get_number(prompt, number_type):
             continue
         return value
 
-def load_inventory():
+def load_inventory(): #load the inventory from a JSON file, or create an empty inventory if the file does not exist
     try:
         with open("inventory.json", "r") as file:
             inventory = json.load(file)
@@ -110,7 +110,8 @@ def load_inventory():
         print("\ninventory.json found, but it is empty or invalid. Starting with an empty inventory.")
         return []
 
-def save_inventory(inventory):
+
+def save_inventory(inventory): #save the current inventory to a JSON file
     with open("inventory.json", "w") as file:
         json.dump(inventory, file, indent=4)
 
